@@ -1,5 +1,3 @@
-
-
 package DAOdata;
 
 import java.sql.*;
@@ -16,8 +14,8 @@ public class DAOPerpustakaan implements DAOImplementPerpustakaan {
     Connection connection;
     final String select = "SELECT * FROM buku";
     final String insert = "INSERT INTO buku (judul, penulis, rating, harga) VALUES (?, ?, ?, ?);";
-    final String update = "UPDATE buku SET judul = ?, penokohan = ?, akting = ?, nilai = ? WHERE judul = ?;";
-    final String delete = "DELETE FROM movie WHERE judul = ?";
+    final String update = "UPDATE buku SET penulis = ?, rating= ?, harga= ? WHERE judul = ?;";
+    final String delete = "DELETE FROM buku WHERE judul = ?";
 
     public DAOPerpustakaan() {
         connection = Connector.connection();
@@ -49,14 +47,45 @@ public class DAOPerpustakaan implements DAOImplementPerpustakaan {
             }
         }
     }
+    
     @Override
     public void update(DataPerpustakaan dp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(update);
+            statement.setString(1, dp.getPenulis());
+            statement.setDouble(2, dp.getRating());
+            statement.setDouble(3, dp.getHarga());
+            statement.setString(4, dp.getJudul());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
-
-    @Override
-    public void delete(Integer Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public void delete(String judul) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(delete);
+            statement.setString(1, judul);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
     public void select (DataPerpustakaan dp){}
     @Override
