@@ -19,7 +19,7 @@ public class ModelTabel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     public String getColumnName (int column){
@@ -32,8 +32,6 @@ public class ModelTabel extends AbstractTableModel{
                 return "Rating";
             case 3:
                 return "Harga";
-            case 4:
-                return "Id";
             default:
                 return null;
         }
@@ -50,8 +48,6 @@ public class ModelTabel extends AbstractTableModel{
                 return dp.get(row).getRating();
             case 3:
                 return dp.get(row).getHarga();
-            case 4:
-                return dp.get(row).getId();
             default:
                 return null;
         }
