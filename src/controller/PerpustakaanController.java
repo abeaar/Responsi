@@ -49,7 +49,7 @@ public class PerpustakaanController {
                 buku.setRating(Double.parseDouble(frame.getJTxtRating().getText()));
                 tmpHasil = Double.parseDouble(frame.getJTxtHargaP().getText());
                 tmpRating = Double.parseDouble(frame.getJTxtRating().getText());
-                tmpRateResult = (tmpHasil + 500 * (tmpRating*100));
+                tmpRateResult = (tmpHasil + 500 + (tmpRating*100));
                 buku.setHarga(tmpRateResult);
                 implPerpus.insert(buku);
                 insertError = false;
@@ -65,7 +65,7 @@ public class PerpustakaanController {
             insertError = true;
         }
     }
-    public void update() {
+        public void update() {
           if (isFormValid()) {
             try {
                 DataPerpustakaan buku = new DataPerpustakaan();
@@ -74,23 +74,46 @@ public class PerpustakaanController {
                 buku.setRating(Double.parseDouble(frame.getJTxtRating().getText()));
                 tmpHasil = Double.parseDouble(frame.getJTxtHargaP().getText());
                 tmpRating = Double.parseDouble(frame.getJTxtRating().getText());
-                tmpRateResult = (tmpHasil + 500 * (tmpRating*100));
+                tmpRateResult = (tmpHasil + 500 + (tmpRating*100));
                 buku.setHarga(tmpRateResult);
-                implPerpus.insert(buku);
-                insertError = false;
+                implPerpus.update(buku);
+                updateError = false;
+                JOptionPane.showMessageDialog(null, "Data Updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException ex) {
                 // Tampilkan pesan bahwa ada input kosong
                 JOptionPane.showMessageDialog(null, "Invalid input!", "Warning", JOptionPane.WARNING_MESSAGE);
                 ex.printStackTrace();
-                insertError = true;
+                updateError = true;
             }
         } else {
             // Tampilkan pesan peringatan bahwa data belum diisi
             JOptionPane.showMessageDialog(null, "Please Fill the form!", "Warning", JOptionPane.WARNING_MESSAGE);
             updateError = true;
         }
-      }
-     public boolean isInsertError() {
+    }
+    
+    public void delete() {
+        if (isFormValid()) {
+            try {
+                DataPerpustakaan movie = new DataPerpustakaan();
+                deleteValue = frame.getJTxtJudul().getText();
+                implPerpus.delete(deleteValue);
+                deleteError = false;
+                JOptionPane.showMessageDialog(null, "Data Deleted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                // Tampilkan pesan bahwa ada input kosong
+                JOptionPane.showMessageDialog(null, "Invalid Input!", "Warning", JOptionPane.WARNING_MESSAGE);
+                ex.printStackTrace();
+                deleteError = true;
+            }
+        } else {
+            // Tampilkan pesan peringatan bahwa data belum diisi
+            JOptionPane.showMessageDialog(null, "Please fill the form!", "Warning", JOptionPane.WARNING_MESSAGE);
+            deleteError = true;
+        }
+    }
+    
+    public boolean isInsertError() {
         return insertError;
     }
 
