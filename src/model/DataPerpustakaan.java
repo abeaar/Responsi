@@ -11,7 +11,6 @@ public class DataPerpustakaan {
     private String penulis;
     private Double rating;
     private Double harga;
-    private Double hargaP;
     private Integer id;
 
     public String getJudul() {
